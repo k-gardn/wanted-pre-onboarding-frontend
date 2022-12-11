@@ -1,6 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import styled from "styled-components";
 import { instance } from "../../network/request";
-export const TodoItem = ({ id, todo, isCompleted, userId }) => {
+import { EditItem } from "./EditItem";
+
+export const TodoItem = ({ id, todo, setTodo, isCompleted, userId }) => {
   // 리스트 페이지에는 투두 리스트의 내용과 완료 여부가 표시되어야 합니다.
   // 투두 리스트의 수정, 삭제 기능을 구현해주세요
   // 투두 리스트의 개별 아이템 우측에 수정버튼이 존재하고 해당 버튼을 누르면 수정모드가 활성화되고 투두 리스트의 내용을 수정할 수 있도록 해주세요
@@ -8,30 +11,75 @@ export const TodoItem = ({ id, todo, isCompleted, userId }) => {
   // 투두 리스트의 개별 아이템 우측에 삭제버튼이 존재하고 해당 버튼을 누르면 투두 리스트가 삭제되도록 해주세요
 
   const [editMode, setEditMode] = useState(false);
+  const [status, setStatus] = useState(isCompleted);
+  const [content, setContent] = useState(todo);
 
   const updateHandler = async () => {
     setEditMode(!editMode);
+  };
+
+  //status가 false일 때, 누르면 완성으로 돌아가는 버튼
+  const completeHandler = async (e) => {
     try {
-      const res = await instance.put(`/todos/${id}`, {
-        todo,
-        isCompleted,
+      const { data } = await instance.put(`/todos/${id}`, {
+        todo: content,
+        isCompleted: !status,
       });
-      console.log(res);
+      setStatus(!status);
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const deleteHandler = () => {};
+  //status가 true일 때, 누르면 미완성으로 돌아가는 버튼
 
+  const deleteHandler = async () => {
+    try {
+      const { data } = await instance.delete(`/todos/${id}`);
+      setTodo([...todo, todo]);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const closeEdit = () => {
+    setEditMode(false);
+  };
   return (
-    <>
-      <div>{todo}</div>
-      <button onClick={updateHandler}>수정</button>
-      <button onClick={deleteHandler}>삭제</button>
-      <button>제출</button>
-      <button>수정 취소</button>
-      <div>내용</div>
-    </>
+    <TodoItemContainer>
+      {editMode ? <div>{todo}</div> : <div>{content}</div>}
+      {status ? (
+        <button onClick={completeHandler}>not yet</button>
+      ) : (
+        <button onClick={completeHandler}>complete!</button>
+      )}
+      {editMode ? (
+        <>
+          <EditItem
+            editiId={id}
+            content={content}
+            setContent={setContent}
+            status={status}
+            setTodo={setTodo}
+            closeEdit={closeEdit}
+          />
+          <button onClick={closeEdit}>수정 취소</button>
+        </>
+      ) : (
+        <>
+          <button onClick={updateHandler}>수정</button>
+          <button onClick={deleteHandler}>삭제</button>
+        </>
+      )}
+    </TodoItemContainer>
   );
 };
+
+const TodoItemContainer = styled.div`
+  border: 1px solid red;
+  height: 150px;
+  width: 500px;
+  margin: 0 auto;
+`;

@@ -5,13 +5,10 @@ export const Form = ({ todo, setTodo }) => {
   const initialState = { todo: "" }; // 초기값
   const [inputTodo, setInputTodo] = useState(initialState);
 
-  const nextId = useRef(2);
-
   const onChangeHandler = (event) => {
     const content = event.target.value;
     setInputTodo({ ...inputTodo, todo: content });
     setTodo(content);
-    nextId.current++;
   };
 
   const onSubmitHandler = (event) => {
@@ -28,6 +25,7 @@ export const Form = ({ todo, setTodo }) => {
       console.log(error);
     }
   }
+
   return (
     <form onSubmit={onSubmitHandler} className="form_container">
       <div className="input_container">
