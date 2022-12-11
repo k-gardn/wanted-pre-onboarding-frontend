@@ -1,16 +1,53 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
+import Form from "../components/form/Form";
 import { TodoItem } from "../components/todo/TodoItem";
+import { instance } from "../network/request";
 
-export const TodoList = () => {
-  // 리스트 페이지에는 입력창과 추가 버튼이 있고, 추가 버튼을 누르면 입력창의 내용이 새로운 투두 리스트로 추가되도록 해주세요
+export const TodoMain = () => {
+  const [list, setList] = useState([]);
+  const [todo, setTodo] = useState("");
+
+  const fetch = useCallback(async () => {
+    try {
+      const { data } = await instance.get(`/todos`);
+      console.log(data);
+      setList(data); //여기에서는 불변성을 안지켜줘야하네
+    } catch (err) {
+      console.error(err);
+    }
+  }, [todo]); //바로 렌더링
+
+  useEffect(() => {
+    fetch();
+
+    // setList(data);
+  }, [fetch]);
+  console.log(list);
 
   return (
     <>
       <div>todo List</div>
-      <input placeholder="오늘의 할일은 무엇이 있을까?"></input>
-      <TodoItem />
-      <TodoItem />
-      <TodoItem />
+      <Form todo={todo} setTodo={setTodo} />
+      {list &&
+        list?.map((todo) => {
+          return <TodoItem key={todo.id} {...todo} />;
+        })}
     </>
   );
 };
+
+// function Todo({todo, onDeleteHandler, onCompleteHandler }) {
+//   return (
+//     <div className="todo-container">
+//       <h2>
+//         {todo.title}
+//       </h2>
+//       <p>
+//         {todo.body}
+//       </p>
+//       <button onClick={()=> {onDeleteHandler(todo.id)}}>삭제</button>
+//       <button onClick={()=> {onCompleteHandler(todo.id)}} >{todo.isDone ? "취소" : "완료"}</button>
+
+//     </div>
+//   )
+// }

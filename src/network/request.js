@@ -10,9 +10,12 @@ export const instance = axios.create({
 
 instance.interceptors.request.use(
   function (config) {
-    const accessToken = localStorage.getItem("Access_token");
+    const accessToken = localStorage.getItem("access_token");
+    console.log(accessToken);
     if (accessToken !== null) {
-      config.headers.common["Authorization"] = `${accessToken}`;
+      config.headers["Authorization"] = `Bearer ${accessToken}`;
+    } else {
+      config.headers["Authorization"] = "";
     }
     return config;
   },
@@ -20,3 +23,11 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
+// if (!accessToken || !refreshToken) {
+//   config.headers["authorization"] = null;
+//   config.headers["refresh-token"] = null;
+// } else {
+//   config.headers["authorization"] = accessToken;
+//   config.headers["refresh-token"] = refreshToken;
+// }
