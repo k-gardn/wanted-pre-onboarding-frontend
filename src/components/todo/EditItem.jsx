@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import styled from "styled-components";
 import { instance } from "../../network/request";
 
 export const EditItem = ({
@@ -37,9 +38,8 @@ export const EditItem = ({
   }
 
   return (
-    <>
+    <EditItemContainer>
       <form onSubmit={(e) => e.preventDefault()}>
-        <label>내용</label>
         <input
           type="text"
           name="content"
@@ -48,8 +48,57 @@ export const EditItem = ({
           value={content}
           required
         />
-        <button onClick={editTodoHandler}>제출</button>
+        <EditbuttonSet>
+          <EditButton onClick={editTodoHandler}>제출</EditButton>
+          <EditCancelButton onClick={closeEdit}>수정 취소</EditCancelButton>
+        </EditbuttonSet>
       </form>
-    </>
+    </EditItemContainer>
   );
 };
+
+const EditItemContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  & form {
+    display: flex;
+    flex-direction: column;
+  }
+  & input {
+    &::placeholder {
+      display: flex;
+      padding-left: 10px;
+    }
+    border: 2px solid #6949e980;
+    border-radius: 10px;
+    width: 220px;
+    height: 30px;
+    font-size: 15px;
+    margin-top: 10px;
+  }
+`;
+
+const EditbuttonSet = styled.div`
+  margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const EditButton = styled.button`
+  border: 2px solid #6949e980;
+  background-color: white;
+  color: #502ae7ee;
+  border-radius: 7px;
+  padding: 5px 7px;
+  cursor: pointer;
+  margin: 0 7px;
+`;
+
+const EditCancelButton = styled.button`
+  border: 2px solid #6949e980;
+  background-color: white;
+  color: #502ae7ee;
+  border-radius: 7px;
+  padding: 5px 7px;
+  cursor: pointer;
+`;

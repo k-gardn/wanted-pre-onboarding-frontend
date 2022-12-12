@@ -23,6 +23,7 @@ export const Login = () => {
         navigate("/todo");
       }
     } catch (error) {
+      alert("이메일 혹은 비밀번호를 다시 확인해주세요.");
       console.log(error);
     }
   }
@@ -42,41 +43,48 @@ export const Login = () => {
   };
 
   return (
-    <div>
+    <LoginContainer>
+      <h2>Todo List</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          placeholder="이메일을 입력하세요."
-          title="email"
-          value={email}
-          onChange={emailHandler}
-        ></input>
-        <input
-          placeholder="비밀번호 입력(4~16자 영문, 숫자 조합)"
-          title="password"
-          type="password"
-          value={password}
-          onChange={pwHandler}
-        ></input>
-        <button
+        <EmailBox>
+          <label>e-mail</label>
+          <input
+            placeholder="이메일을 입력하세요."
+            title="email"
+            value={email}
+            onChange={emailHandler}
+          ></input>
+        </EmailBox>
+        <PasswordBox>
+          <label>password</label>
+          <input
+            placeholder="비밀번호 입력(4~16자 영문, 숫자 조합)"
+            title="password"
+            type="password"
+            value={password}
+            onChange={pwHandler}
+          ></input>
+        </PasswordBox>
+        <LoginButton
           onClick={loginHandler}
           disabled={email === "" || password === ""}
         >
           로그인
-        </button>
-        <div>OR</div>
-        <div>
-          <p>아직 회원이 아니세요?</p>
-          <p onClick={() => navigate("/join")} style={{ cursor: "pointer" }}>
+        </LoginButton>
+        <GoJoin>
+          <div>아직 회원이 아니세요?</div>
+          <p onClick={() => navigate("/")} style={{ cursor: "pointer" }}>
             회원가입 ＞
           </p>
-        </div>
+        </GoJoin>
       </form>
-    </div>
+    </LoginContainer>
   );
 };
 
 const LoginContainer = styled.div`
-  border: 1px solid red;
+  border-radius: 20px;
+  background-color: #5720af32;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -84,7 +92,7 @@ const LoginContainer = styled.div`
   height: 430px;
   width: 400px;
   & h2 {
-    margin-bottom: 50px;
+    margin-bottom: 5vh;
     font-size: 45px;
   }
 `;
@@ -110,7 +118,7 @@ const EmailBox = styled.div`
 const PasswordBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
+  margin-bottom: 3vh;
 
   & label {
     font-size: 23px;
@@ -124,5 +132,32 @@ const PasswordBox = styled.div`
     font-size: 15px;
     background-color: transparent;
     margin-bottom: 10px;
+  }
+`;
+
+const LoginButton = styled.button`
+  border: transparent;
+  border-radius: 5px;
+  /* padding: 8px 10px; */
+  background-color: #6949e980;
+  width: 70px;
+  height: 30px;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+`;
+
+const GoJoin = styled.div`
+  & div {
+    padding-top: 10px;
+    font-size: 15px;
+  }
+  & p {
+    color: #5a17ea;
+    padding-bottom: 10px;
+    font-size: 16px;
+    /* font-weight: 600; */
   }
 `;

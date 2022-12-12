@@ -51,9 +51,13 @@ export const TodoItem = ({ id, todo, setTodo, isCompleted, userId }) => {
     <TodoItemContainer>
       {editMode ? <div>{todo}</div> : <div>{content}</div>}
       {status ? (
-        <button onClick={completeHandler}>not yet</button>
+        <StatusButton className="notyet" onClick={completeHandler}>
+          not yet
+        </StatusButton>
       ) : (
-        <button onClick={completeHandler}>complete!</button>
+        <StatusButton className="completed" onClick={completeHandler}>
+          complete!
+        </StatusButton>
       )}
       {editMode ? (
         <>
@@ -65,21 +69,65 @@ export const TodoItem = ({ id, todo, setTodo, isCompleted, userId }) => {
             setTodo={setTodo}
             closeEdit={closeEdit}
           />
-          <button onClick={closeEdit}>수정 취소</button>
         </>
       ) : (
-        <>
-          <button onClick={updateHandler}>수정</button>
+        <MainButtonSet>
+          <button className="editButton" onClick={updateHandler}>
+            수정
+          </button>
           <button onClick={deleteHandler}>삭제</button>
-        </>
+        </MainButtonSet>
       )}
     </TodoItemContainer>
   );
 };
 
 const TodoItemContainer = styled.div`
-  border: 1px solid red;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  /* padding: 10px; */
   height: 150px;
-  width: 500px;
+  width: 40vw;
   margin: 0 auto;
+  margin-bottom: 20px;
+`;
+
+const StatusButton = styled.button`
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  border: transparent;
+  color: white;
+  border-radius: 5px;
+  padding: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  &.completed {
+    background-color: #394ae185;
+  }
+  &.notyet {
+    background-color: #abaaaa;
+  }
+`;
+
+const MainButtonSet = styled.div`
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  & button {
+    border: 2px solid #6949e980;
+    background-color: white;
+    color: #502ae7ee;
+    border-radius: 7px;
+    padding: 5px 7px;
+    cursor: pointer;
+  }
+  .editButton {
+    margin-right: 10px;
+  }
 `;

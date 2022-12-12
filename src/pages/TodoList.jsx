@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Form from "../components/form/Form";
 import { TodoItem } from "../components/todo/TodoItem";
 import { instance } from "../network/request";
+import styled from "styled-components";
 
 export const TodoMain = () => {
   const navigate = useNavigate();
@@ -35,13 +36,23 @@ export const TodoMain = () => {
   console.log(list);
 
   return (
-    <>
-      <div>todo List</div>
+    <TodoListContainer>
+      <h1>Todo List</h1>
       <Form todo={todo} setTodo={setTodo} />
       {list &&
         list?.map((todo) => {
           return <TodoItem key={todo.id} {...todo} setTodo={setTodo} />;
         })}
-    </>
+    </TodoListContainer>
   );
 };
+
+const TodoListContainer = styled.div`
+  border-radius: 20px;
+  background-color: #5720af32;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10vh auto;
+  width: 70vw;
+`;

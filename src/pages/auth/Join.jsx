@@ -84,7 +84,7 @@ export const Join = () => {
             onChange={repwHandler}
           ></input>
         </PasswordBox>
-        <button
+        <JoinButton
           type="submit"
           onClick={() => join(email, password)}
           disabled={
@@ -95,15 +95,16 @@ export const Join = () => {
           }
         >
           가입하기
-        </button>
-        <button onClick={() => navigate("/login")}>로그인</button>
+        </JoinButton>
+        <LoginButton onClick={() => navigate("/login")}>로그인</LoginButton>
       </form>
     </JoinContainer>
   );
 };
 
 const JoinContainer = styled.div`
-  border: 1px solid red;
+  border-radius: 20px;
+  background-color: #5720af32;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,7 +112,7 @@ const JoinContainer = styled.div`
   height: 430px;
   width: 400px;
   & h2 {
-    margin-bottom: 50px;
+    margin-bottom: 5vh;
     font-size: 45px;
   }
 `;
@@ -137,7 +138,7 @@ const EmailBox = styled.div`
 const PasswordBox = styled.div`
   display: flex;
   flex-direction: column;
-  margin-bottom: 40px;
+  margin-bottom: 3vh;
 
   & label {
     font-size: 23px;
@@ -152,4 +153,33 @@ const PasswordBox = styled.div`
     background-color: transparent;
     margin-bottom: 10px;
   }
+`;
+
+const JoinButton = styled.button`
+  border: transparent;
+  border-radius: 5px;
+  /* padding: 8px 12px; */
+  background-color: #6949e980;
+  background-color: ${(props) => (props.disabled ? "gray" : "#6949e980;")};
+  width: 75px;
+  height: 30px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  margin-right: 15px;
+  cursor: pointer;
+`;
+
+const LoginButton = styled.button`
+  border: transparent;
+  border-radius: 5px;
+  /* padding: 8px 10px; */
+  background-color: #5e49e98e;
+  width: 75px;
+  height: 30px;
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
 `;

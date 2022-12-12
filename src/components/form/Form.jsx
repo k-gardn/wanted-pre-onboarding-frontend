@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import styled from "styled-components";
 import { instance } from "../../network/request";
 
 export const Form = ({ todo, setTodo }) => {
@@ -28,8 +29,7 @@ export const Form = ({ todo, setTodo }) => {
 
   return (
     <form onSubmit={onSubmitHandler} className="form_container">
-      <div className="input_container">
-        <label>내용</label>
+      <FormContainer className="input_container">
         <input
           type="text"
           name="content"
@@ -38,9 +38,40 @@ export const Form = ({ todo, setTodo }) => {
           value={inputTodo.todo}
           required
         />
-      </div>
-      <button onClick={creatTodoHandler}>추가하기</button>
+        <button onClick={creatTodoHandler}>추가하기</button>
+      </FormContainer>
     </form>
   );
 };
 export default Form;
+
+const FormContainer = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+  & input {
+    &::placeholder {
+      display: flex;
+      padding-left: 15px;
+    }
+    border: none;
+    border-radius: 10px;
+    width: 25vw;
+    height: 30px;
+    font-size: 15px;
+    margin-right: 20px;
+    /* background-color: transparent; */
+  }
+  & button {
+    border: transparent;
+    border-radius: 5px;
+    /* padding: 8px 10px; */
+    background-color: #6949e980;
+    width: 75px;
+    height: 30px;
+    text-align: center;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+`;
