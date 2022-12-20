@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { instance } from "../../network/request";
+import { todoAPI } from "../../network/api";
 
 export const Form = ({ todo, setTodo }) => {
   const initialState = { todo: "" }; // 초기값
@@ -18,8 +18,8 @@ export const Form = ({ todo, setTodo }) => {
 
   async function creatTodoHandler() {
     try {
-      const res = await instance.post(`/todos`, { todo });
-      console.log(res);
+      const res = await todoAPI.post(`/todos`, { todo });
+      // console.log(res);
       setTodo([...todo, todo]);
       setInputTodo(initialState); // input창을 빈칸으로
     } catch (error) {

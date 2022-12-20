@@ -14,7 +14,7 @@ export const Login = () => {
     try {
       const reqdata = { email, password };
       const res = await instance.post(`/auth/signin`, reqdata);
-      console.log(res);
+      // console.log(res);
       if (res.data.success === false) {
         alert(res.data.error);
       } else {

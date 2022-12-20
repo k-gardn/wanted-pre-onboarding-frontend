@@ -11,7 +11,7 @@ export const instance = axios.create({
 instance.interceptors.request.use(
   function (config) {
     const accessToken = localStorage.getItem("access_token");
-    console.log(accessToken);
+    // console.log(accessToken);
     if (accessToken !== null) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
     } else {
@@ -23,11 +23,3 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-
-// if (!accessToken || !refreshToken) {
-//   config.headers["authorization"] = null;
-//   config.headers["refresh-token"] = null;
-// } else {
-//   config.headers["authorization"] = accessToken;
-//   config.headers["refresh-token"] = refreshToken;
-// }

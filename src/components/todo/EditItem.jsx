@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import styled from "styled-components";
-import { instance } from "../../network/request";
+import { todoAPI } from "../../network/api";
 
 export const EditItem = ({
   content,
@@ -11,7 +11,7 @@ export const EditItem = ({
   setTodo,
   closeEdit,
 }) => {
-  console.log(content);
+  // console.log(content);
 
   const initialState = { todo: "" }; // 초기값
   const [inputTodo, setInputTodo] = useState(initialState);
@@ -25,12 +25,12 @@ export const EditItem = ({
 
   async function editTodoHandler() {
     try {
-      const res = await instance.put(`/todos/${editiId}`, {
+      const res = await todoAPI.updateTodo(editiId, {
         todo: content,
         isCompleted: status,
       });
       setTodo([...content, content]);
-      console.log(res);
+      // console.log(res);
       closeEdit();
     } catch (error) {
       console.log(error);

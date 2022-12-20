@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import { instance } from "../../network/request";
+import { todoAPI } from "../../network/api";
 import { EditItem } from "./EditItem";
 
 export const TodoItem = ({ id, todo, setTodo, isCompleted, userId }) => {
@@ -21,12 +21,12 @@ export const TodoItem = ({ id, todo, setTodo, isCompleted, userId }) => {
   //status가 false일 때, 누르면 완성으로 돌아가는 버튼
   const completeHandler = async (e) => {
     try {
-      const { data } = await instance.put(`/todos/${id}`, {
+      const { data } = await todoAPI.updateTodo(id, {
         todo: content,
         isCompleted: !status,
       });
       setStatus(!status);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -36,9 +36,9 @@ export const TodoItem = ({ id, todo, setTodo, isCompleted, userId }) => {
 
   const deleteHandler = async () => {
     try {
-      const { data } = await instance.delete(`/todos/${id}`);
+      const { data } = await todoAPI.deleteTodo(id);
       setTodo([...todo, todo]);
-      console.log(data);
+      // console.log(data);
     } catch (error) {
       console.log(error);
     }

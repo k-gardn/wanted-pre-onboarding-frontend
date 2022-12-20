@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Form from "../components/form/Form";
 import { TodoItem } from "../components/todo/TodoItem";
-import { instance } from "../network/request";
+import { todoAPI } from "../network/api";
 import styled from "styled-components";
 
 export const TodoMain = () => {
@@ -13,8 +13,8 @@ export const TodoMain = () => {
 
   const fetch = useCallback(async () => {
     try {
-      const { data } = await instance.get(`/todos`);
-      console.log(data);
+      const { data } = await todoAPI.getTodos();
+      // console.log(data);
       setList(data); //여기에서는 불변성을 안지켜줘야하네
     } catch (err) {
       console.error(err);
@@ -33,7 +33,7 @@ export const TodoMain = () => {
     }
   }, [navigate]);
 
-  console.log(list);
+  // console.log(list);
 
   return (
     <TodoListContainer>
