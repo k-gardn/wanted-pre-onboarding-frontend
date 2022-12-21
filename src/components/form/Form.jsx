@@ -18,7 +18,7 @@ export const Form = ({ todo, setTodo }) => {
 
   async function creatTodoHandler() {
     try {
-      const res = await todoAPI.post(`/todos`, { todo });
+      const res = await todoAPI.addTodo({ todo });
       // console.log(res);
       setTodo([...todo, todo]);
       setInputTodo(initialState); // input창을 빈칸으로
