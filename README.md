@@ -2,7 +2,7 @@
 
 <hr>
 
-### [배포 링크](https://wanted-pre-onboarding-frontend-rosy-nu.vercel.app/todo)
+### [TODO_LIST_배포](https://wanted-pre-onboarding-frontend-rosy-nu.vercel.app/todo)
 
 [사용법] 
 
